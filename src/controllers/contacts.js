@@ -6,10 +6,18 @@ import {
   getContactById,
   patchContactById,
 } from '../services/contacts.js';
-import mongoose from 'mongoose';
+import { parsePaginationParams } from '../utils/parsePaginationParams.js';
+import { parseSortParams } from '../utils/parseSortParams.js';
 
 export const getContactsController = async (req, res) => {
-  const contacts = await getAllContacts();
+  const { page, perPage } = parsePaginationParams(req.query);
+  const { sortBy, sortOrder } = parseSortParams(req.query);
+  const contacts = await getAllContacts({
+    page,
+    perPage,
+    sortBy,
+    sortOrder,
+  });
 
   res.status(200).json({
     status: 200,
@@ -20,10 +28,6 @@ export const getContactsController = async (req, res) => {
 
 export const getContactByIdController = async (req, res, next) => {
   const { contactId } = req.params;
-  if (!mongoose.Types.ObjectId.isValid(contactId)) {
-    next(createHttpError(404, 'Contact not found'));
-    return;
-  }
 
   const contact = await getContactById(contactId);
 
@@ -52,11 +56,6 @@ export const createContactController = async (req, res) => {
 export const patchContactController = async (req, res, next) => {
   const { contactId } = req.params;
 
-  if (!mongoose.Types.ObjectId.isValid(contactId)) {
-    next(createHttpError(404, 'Contact not found'));
-    return;
-  }
-
   const contact = await patchContactById(contactId, req.body);
 
   if (!contact) {
@@ -73,10 +72,6 @@ export const patchContactController = async (req, res, next) => {
 
 export const deleteContactController = async (req, res, next) => {
   const { contactId } = req.params;
-  if (!mongoose.Types.ObjectId.isValid(contactId)) {
-    next(createHttpError(404, 'Contact not found'));
-    return;
-  }
 
   const contact = await deleteContactById(contactId);
 

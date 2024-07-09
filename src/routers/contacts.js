@@ -14,6 +14,7 @@ import {
   patchContactController,
   deleteContactController,
 } from '../controllers/contacts.js';
+import { upload } from '../middlewares/upload.js';
 
 const router = Router();
 
@@ -25,12 +26,14 @@ router.get('/:contactId', ctrlWrapper(getContactByIdController));
 
 router.post(
   '/',
+  upload.single('photo'),
   validateBody(createContactSchema),
   ctrlWrapper(createContactController),
 );
 
 router.patch(
   '/:contactId',
+  upload.single('photo'),
   validateBody(updateContactSchema),
   ctrlWrapper(patchContactController),
 );

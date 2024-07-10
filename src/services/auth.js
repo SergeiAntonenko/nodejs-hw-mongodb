@@ -13,9 +13,11 @@ import { SessionsCollection } from '../db/models/session.js';
 import { UsersCollection } from '../db/models/user.js';
 import { env } from '../utils/env.js';
 import { sendEmail } from '../utils/sendEmail.js';
-import { log } from 'console';
 
 export const registerUser = async (payload) => {
+  const user = UsersCollection.findOne({ email: payload.email });
+  if (user) throw createHttpError(409, 'Email in use');
+
   const encryptedPassword = await bcrypt.hash(payload.password, 10);
 
   return await UsersCollection.create({

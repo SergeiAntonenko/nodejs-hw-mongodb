@@ -28,3 +28,8 @@ export const CLOUDINARY = {
   API_KEY: 'API_KEY',
   API_SECRET: 'API_SECRET',
 };
+
+export const GOOGLE = {
+  CLIENT_ID: 'CLIENT_ID',
+  CLIENT_SECRET: 'CLIENT_SECRET',
+};

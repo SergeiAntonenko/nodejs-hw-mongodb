@@ -190,12 +190,11 @@
                 "required": [
                   "name",
                   "phoneNumber",
-                  "contactType",
-                  "userId"
+                  "contactType"
                 ],
                 "properties": {
                   "name": {
-                    "description": "Student's name",
+                    "description": "Contact's name",
                     "type": "string",
                     "example": "John Doe"
                   },
@@ -354,6 +353,53 @@
             }
           }
         ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "description": "Contact's name",
+                    "type": "string",
+                    "example": "Jonh Doe"
+                  },
+                  "phoneNumber": {
+                    "description": "Contact's number",
+                    "type": "string",
+                    "example": 38012345678
+                  },
+                  "email": {
+                    "description": "Contact's email",
+                    "type": "string",
+                    "format": "email",
+                    "example": "example@email.ua"
+                  },
+                  "isFavourite": {
+                    "description": "Favourite contact or not",
+                    "type": "boolean",
+                    "example": true
+                  },
+                  "contactType": {
+                    "description": "Contact's type",
+                    "type": "string",
+                    "enum": [
+                      "work",
+                      "home",
+                      "personal"
+                    ]
+                  },
+                  "photo": {
+                    "description": "Contact's photo",
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Patch contact by id",
@@ -361,11 +407,6 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "name",
-                    "phoneNumber",
-                    "contactType"
-                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -373,7 +414,7 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Successfully found contact with id 665d88ffe136ae7727caed35!"
+                      "example": "Successfully patched a contact!"
                     },
                     "data": {
                       "type": "object",

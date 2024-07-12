@@ -14,10 +14,9 @@ requestBody:
           - name
           - phoneNumber
           - contactType
-          - userId
         properties:
           name:
-            description: "Student's name"
+            description: "Contact's name"
             type: string
             example: 'John Doe'
           phoneNumber:

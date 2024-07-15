@@ -217,11 +217,6 @@
                       "personal"
                     ]
                   },
-                  "userId": {
-                    "description": "User's id",
-                    "type": "string",
-                    "example": "668c2570bd8f5be3a0eb0951"
-                  },
                   "photo": {
                     "description": "Contact's photo",
                     "type": "string",
